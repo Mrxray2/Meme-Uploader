@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pmeme Indonesia</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-section label {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .upload-section label:hover {
+            background-color: #0056b3;
+        }
+
+        .upload-section .post-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .upload-section .post-button:hover {
+            background-color: #218838;
+        }
+
+        .post {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .post img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .post-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .post-actions button,
+        .post-actions a {
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .post-actions button:hover,
+        .post-actions a:hover {
+            background-color: #0056b3;
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        Pmeme Indonesia
+    </header>
+
+    <main>
+        <div class="upload-section">
+            <label for="upload-photo">Pilih Foto</label>
+            <input type="file" id="upload-photo" accept="image/*">
+            <button class="post-button" onclick="uploadPhoto()">Posting Foto</button>
+        </div>
+
+        <!-- Tempat menampilkan postingan -->
+        <div id="post-container"></div>
+    </main>
+
+    <script>
+        function uploadPhoto() {
+            const fileInput = document.getElementById('upload-photo');
+            const postContainer = document.getElementById('post-container');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Membuat elemen posting baru
+                    const post = document.createElement('div');
+                    post.classList.add('post');
+
+                    post.innerHTML = `
+                        <img src="${e.target.result}" alt="Uploaded Photo">
+                        <div class="post-actions">
+                            <button>👍 Vote</button>
+                            <a href="${e.target.result}" download>Download</a>
+                            <button>Komentar</button>
+                        </div>
+                        <div class="comments-section">
+                            <textarea class="comment-box" placeholder="Tulis komentar..."></textarea>
+                        </div>
+                    `;
+
+                    // Menambahkan posting ke halaman
+                    postContainer.appendChild(post);
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                alert('Pilih foto terlebih dahulu!');
+            }
+        }
+    </script>
+</body>
+
+</html>
